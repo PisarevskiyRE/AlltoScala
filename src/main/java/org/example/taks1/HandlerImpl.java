@@ -1,10 +1,10 @@
 package org.example.taks1;
 
-public class MyHandler implements Handler {
+public class HandlerImpl implements Handler {
 
     private final Client client;
 
-    public MyHandler(Client client) {
+    public HandlerImpl(Client client) {
         this.client = client;
     }
 
@@ -14,11 +14,9 @@ public class MyHandler implements Handler {
         Response response1 = client.getApplicationStatus1(id);
         long timeElapsed = System.currentTimeMillis() - startTime;
 
-        if (response1 instanceof Response.Success) {
-            Response.Success successResponse = (Response.Success) response1;
+        if (response1 instanceof Response.Success successResponse) {
             return new ApplicationStatusResponse.Success(successResponse.applicationId(), successResponse.applicationStatus());
-        } else if (response1 instanceof Response.RetryAfter) {
-            Response.RetryAfter retryAfterResponse = (Response.RetryAfter) response1;
+        } else if (response1 instanceof Response.RetryAfter retryAfterResponse) {
             long delay1 = retryAfterResponse.delay().getSeconds() * 1000 - timeElapsed;
             if (delay1 > 0) {
                 try {
@@ -33,11 +31,9 @@ public class MyHandler implements Handler {
         Response response2 = client.getApplicationStatus2(id);
         timeElapsed = System.currentTimeMillis() - startTime;
 
-        if (response2 instanceof Response.Success) {
-            Response.Success successResponse = (Response.Success) response2;
+        if (response2 instanceof Response.Success successResponse) {
             return new ApplicationStatusResponse.Success(successResponse.applicationId(), successResponse.applicationStatus());
-        } else if (response2 instanceof Response.RetryAfter) {
-            Response.RetryAfter retryAfterResponse = (Response.RetryAfter) response2;
+        } else if (response2 instanceof Response.RetryAfter retryAfterResponse) {
             long delay2 = retryAfterResponse.delay().getSeconds() * 1000 - timeElapsed;
             if (delay2 > 0) {
                 try {
